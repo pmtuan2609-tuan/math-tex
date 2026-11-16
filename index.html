@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathTex Pro 2026 — Ngân Hàng Câu Hỏi & Đảo Đề Thi GDPT 2018</title>
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- MathJax hiển thị công thức Toán học -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    /* Tùy chỉnh thanh cuộn kiểu giao diện Desktop */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .tree-node-active { background-color: #dbeafe !important; color: #1e40af !important; font-weight: 700; border-left: 3px solid #2563eb; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col font-sans select-none antialiased">
+
+  <!-- ================= TOP HEADER (GIỐNG APP_MATHTEX_TRACNGHIEM) ================= -->
+  <header class="bg-[#004e98] text-white shadow-md border-b border-blue-900">
+    <div class="max-w-[1600px] mx-auto px-4 py-2.5 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 bg-white/15 rounded-lg flex items-center justify-center border border-white/20 shadow-inner">
+          <i class="fa-solid fa-cube text-lg text-yellow-300"></i>
+        </div>
+        <div>
+          <h1 class="text-base font-extrabold tracking-wide leading-tight flex items-center gap-2">
+            MathTex Pro 2026
+            <span class="text-[10px] bg-yellow-400 text-slate-900 px-2 py-0.5 rounded font-black">GDPT 2018</span>
+          </h1>
+          <p class="text-[11px] text-blue-200">Hệ Thống Ngân Hàng Câu Hỏi & Đảo Đề Thi Trắc Nghiệm — Thầy Tuấn & Thầy Việt Hà</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <div class="hidden md:flex items-center space-x-2 bg-blue-950/50 text-emerald-300 text-xs px-3.5 py-1.5 rounded-full border border-blue-400/30 font-semibold shadow-inner">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="header-license-text">● Bản quyền Vĩnh viễn (Đã mở khóa Đảo đề)</span>
+        </div>
+        <button onclick="switchTab(3)" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs px-3.5 py-1.5 rounded-lg transition shadow flex items-center gap-1.5">
+          <i class="fa-solid fa-crown text-amber-900"></i> Nâng Cấp VIP
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN TABS (4 TAB CHÍNH NHƯ DESKTOP) ================= -->
+  <div class="bg-white border-b border-slate-300 shadow-sm sticky top-0 z-40">
+    <div class="max-w-[1600px] mx-auto px-4 flex space-x-1 text-xs font-bold">
+      <button id="nav-tab1" onclick="switchTab(1)" class="py-3 px-5 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 transition hover:bg-blue-50/50">
+        <i class="fa-solid fa-database text-blue-600"></i> 1. NGÂN HÀNG CÂU HỎI (TracNghiem_TLN)
+      </button>
+      <button id="nav-tab2" onclick="switchTab(2)" class="py-3 px-5 border-b-2 border-transparent text-slate-600 hover:text-blue-600 flex items-center gap-2 transition hover:bg-slate-50">
+        <i class="fa-solid fa-shuffle text-slate-400"></i> 2. ĐẢO ĐỀ THI GDPT 2018 (Quan_Ly_Dao_De)
+      </button>
+      <button id="nav-tab3" onclick="switchTab(3)" class="py-3 px-5 border-b-2 border-transparent text-slate-600 hover:text-blue-600 flex items-center gap-2 transition hover:bg-slate-50">
+        <i class="fa-solid fa-shield-halved text-slate-400"></i> 3. GIẤY PHÉP BẢN QUYỀN
+      </button>
+      <button id="nav-tab4" onclick="switchTab(4)" class="py-3 px-5 border-b-2 border-transparent text-slate-600 hover:text-blue-600 flex items-center gap-2 transition hover:bg-slate-50">
+        <i class="fa-regular fa-circle-question text-slate-400"></i> 4. HƯỚNG DẪN SỬ DỤNG
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= CONTAINER NỘI DUNG CHÍNH ================= -->
+  <main class="max-w-[1600px] mx-auto px-4 py-4 flex-1 w-full flex flex-col">
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: NGÂN HÀNG CÂU HỎI (MÔ PHỎNG 1:1 TRACNGHIEM_TLN VỚI CÂY THƯ MỤC) -->
+    <!-- ========================================================================= -->
+    <div id="tab1-content" class="grid grid-cols-12 gap-4 flex-1">
+      
+      <!-- CỘT TRÁI (3.5/12): CÂY THƯ MỤC DẠNG TOÁN QTreeWidget -->
+      <div class="col-span-12 lg:col-span-4 bg-white rounded-xl border border-slate-300 shadow-sm flex flex-col h-[78vh]">
+        
+        <!-- Thanh tiêu đề cây -->
+        <div class="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between rounded-t-xl">
+          <div class="font-extrabold text-xs text-blue-900 uppercase flex items-center gap-2">
+            <i class="fa-solid fa-folder-tree text-blue-600"></i> Trắc Nghiệm GDPT 2018
+          </div>
+          <span class="text-[10px] bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded">9 Nhánh Lớn</span>
+        </div>
+
+        <!-- Ô tìm kiếm dạng toán -->
+        <div class="p-2 border-b border-slate-200 bg-white">
+          <div class="relative">
+            <input type="text" id="tree-search" oninput="filterTree()" placeholder="🔍 Tìm kiếm dạng toán (VD: cực trị, tích phân, mốt...)" class="w-full text-xs border border-slate-300 rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-blue-500 bg-slate-50">
+            <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2 text-slate-400 text-xs"></i>
+          </div>
+        </div>
+
+        <!-- Vùng danh sách cây phân cấp (Accordion Tree) -->
+        <div id="tree-container" class="flex-1 overflow-y-auto p-2 text-xs space-y-1">
+          <!-- Javascript sẽ sinh cây phân cấp tại đây -->
+        </div>
+
+        <div class="p-2.5 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex justify-between items-center">
+          <span>Chọn 1 dạng để tải câu hỏi</span>
+          <button onclick="expandAllTree(true)" class="text-blue-600 hover:underline font-semibold">Mở tất cả</button>
+        </div>
+      </div>
+
+      <!-- CỘT PHẢI (8.5/12): XEM TRƯỚC CÂU HỎI & NÚT THAO TÁC -->
+      <div class="col-span-12 lg:col-span-8 bg-white rounded-xl border border-slate-300 shadow-sm flex flex-col h-[78vh]">
+        
+        <!-- Toolbar phía trên -->
+        <div class="p-3 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 rounded-t-xl">
+          <div class="flex items-center space-x-2">
+            <span id="current-badge" class="bg-blue-600 text-white font-bold text-[11px] px-2.5 py-1 rounded">Dạng toán đang chọn</span>
+            <span id="current-topic-title" class="font-bold text-xs text-slate-700 truncate max-w-md">Chưa chọn dạng toán</span>
+          </div>
+
+          <!-- Nhóm nút hành động chính (Giống Desktop) -->
+          <div class="flex items-center space-x-2">
+            <button onclick="refreshQuestion()" class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg transition shadow flex items-center gap-1.5">
+              <i class="fa-solid fa-arrows-rotate"></i> Sinh Câu Mới (Đổi Số)
+            </button>
+            <button onclick="downloadSingleWord()" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg transition shadow flex items-center gap-1.5">
+              <i class="fa-solid fa-file-word"></i> Xuất File Word (.docx)
+            </button>
+            <button onclick="toggleSolution()" id="btn-toggle-sol" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs px-3 py-1.5 rounded-lg transition">
+              Ẩn/Hiện Lời Giải
+            </button>
+          </div>
+        </div>
+
+        <!-- Khung xem nội dung câu hỏi (Render TeX) -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-4">
+          <div id="question-preview-area" class="text-sm leading-relaxed text-slate-800">
+            <div class="text-center py-20 text-slate-400">
+              <i class="fa-solid fa-arrow-left text-3xl mb-3 text-blue-300 animate-bounce"></i>
+              <p class="font-semibold">Vui lòng click chọn 1 dạng toán ở cây bên trái để xem câu hỏi.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer thanh trạng thái -->
+        <div class="p-2.5 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex justify-between items-center">
+          <span>Định dạng Word: Times New Roman 12pt • Đáp án đúng có gạch chân chuẩn quy chế Thầy Tuấn</span>
+          <button onclick="copyTeXCode()" class="text-blue-600 hover:underline font-semibold flex items-center gap-1">
+            <i class="fa-regular fa-copy"></i> Sao chép mã LaTeX
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: ĐẢO ĐỀ THI GDPT 2018 (MÔ PHỎNG 1:1 QUAN_LY_DAO_DE.PY) -->
+    <!-- ========================================================================= -->
+    <div id="tab2-content" class="hidden space-y-4">
+      
+      <!-- Banner Bản Quyền Xanh Ngọc (Y Hệt Desktop) -->
+      <div class="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <span class="text-2xl">✨</span>
+          <div>
+            <span class="text-emerald-900 font-extrabold text-xs">BẢN QUYỀN VĨNH VIỄN:</span>
+            <span class="text-emerald-800 text-xs">Tính năng Đảo Đề Thi GDPT 2018 (Xuất TeX • Xuất Word gạch chân đáp án đúng • Ma trận Excel) đã được <b>mở khóa toàn diện</b>.</span>
+          </div>
+        </div>
+        <span class="bg-emerald-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">SẴN SÀNG</span>
+      </div>
+
+      <div class="grid grid-cols-12 gap-5">
+        
+        <!-- Cột trái: 1. Nguồn dữ liệu & Cấu hình -->
+        <div class="col-span-12 lg:col-span-8 space-y-4">
+          
+          <!-- Box 1: Nguồn dữ liệu đề thi -->
+          <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm space-y-3">
+            <div class="font-bold text-xs text-slate-800 flex items-center justify-between border-b pb-2">
+              <span>1. NGUỒN DỮ LIỆU ĐỀ THI (DÁN ĐỀ THI HOẶC CHỌN FILE)</span>
+              <button onclick="pasteSampleExam()" class="text-blue-600 hover:underline text-[11px] font-semibold">📋 Dán đề mẫu 2018</button>
+            </div>
+
+            <textarea id="exam-source-text" rows="11" oninput="analyzeExamInput()" placeholder="Dán nội dung đề thi LaTeX (chứa các câu \begin{ex}...\end{ex}) hoặc định dạng Câu 1:... vào đây." class="w-full border border-slate-300 rounded-lg p-3 text-xs font-mono bg-slate-50 outline-none focus:border-blue-500 leading-relaxed"></textarea>
+
+            <!-- Bảng thống kê nhận diện tự động (Giống Desktop) -->
+            <div id="exam-detect-summary" class="p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs text-blue-900">
+              <b>Kết quả nhận diện tự động:</b> Chưa nhập câu hỏi nào.
+            </div>
+          </div>
+
+          <!-- Box 2: Cấu hình mã đề -->
+          <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm space-y-3">
+            <div class="font-bold text-xs text-slate-800 border-b pb-2">2. CẤU HÌNH THIẾT LẬP MÃ ĐỀ</div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Số lượng mã đề cần tạo:</label>
+                <input type="number" id="dao-num-codes" value="4" min="1" max="12" class="w-full border rounded-lg p-2 text-xs font-bold">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Mã đề bắt đầu:</label>
+                <input type="number" id="dao-start-code" value="101" class="w-full border rounded-lg p-2 text-xs font-bold">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1">Tên file xuất:</label>
+                <input type="text" id="dao-exam-title" value="Kiem_Tra_Toan_12" class="w-full border rounded-lg p-2 text-xs font-bold">
+              </div>
+            </div>
+
+            <div class="flex flex-wrap gap-4 pt-2 text-xs font-semibold text-slate-700">
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="checkbox" id="dao-chk-underline" checked class="w-4 h-4 text-blue-600 rounded">
+                <span>Gạch chân đáp án đúng trong Word (.docx)</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="checkbox" id="dao-chk-solution" checked class="w-4 h-4 text-blue-600 rounded">
+                <span>Kèm bảng lời giải chi tiết vào cuối đề</span>
+              </label>
+              <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="checkbox" id="dao-chk-excel" checked class="w-4 h-4 text-emerald-600 rounded">
+                <span>Xuất bảng Ma trận đáp án Excel (.xlsx)</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Cột phải: 3. Thao tác & Kết quả tải về -->
+        <div class="col-span-12 lg:col-span-4 space-y-4">
+          <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm space-y-4">
+            <div class="font-bold text-xs text-slate-800 border-b pb-2">3. THỰC HIỆN ĐẢO ĐỀ & XUẤT FILE</div>
+            
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Hệ thống sẽ xáo trộn câu hỏi độc lập trong từng phần (Phần I, II, III), hoán vị các phương án A-B-C-D, bảo toàn các hình TikZ và xuất trọn bộ gói ZIP.
+            </p>
+
+            <button onclick="startMixingExam()" id="btn-start-mix" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2 transition">
+              <i class="fa-solid fa-bolt text-sm"></i> Bắt Đầu Đảo Đề & Tải File Word (.zip)
+            </button>
+
+            <!-- Thanh tiến trình (Giống Desktop) -->
+            <div id="mix-progress-box" class="hidden space-y-1.5 pt-2">
+              <div class="flex justify-between text-[11px] font-bold text-slate-600">
+                <span id="mix-status-lbl">Đang xử lý...</span>
+                <span id="mix-percent-lbl">0%</span>
+              </div>
+              <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                <div id="mix-progress-bar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
+              </div>
+            </div>
+
+            <!-- Danh sách kết quả -->
+            <div class="border-t pt-3">
+              <span class="text-xs font-bold text-slate-700 block mb-2">Gói xuất Word bao gồm:</span>
+              <ul class="text-xs text-slate-600 space-y-1.5 pl-4 list-disc">
+                <li>File đề thi riêng từng mã (Mã 101.docx, 102.docx...)</li>
+                <li>Phiếu soi đáp án gạch chân trực tiếp trong Word</li>
+                <li>Ma trận bảng đáp án tổng hợp nhanh</li>
+                <li>Hình vẽ TikZ tự động biên dịch thành ảnh sắc nét</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: GIẤY PHÉP BẢN QUYỀN (MÔ PHỎNG LICENSE TAB CỦA THẦY TUẤN) -->
+    <!-- ========================================================================= -->
+    <div id="tab3-content" class="hidden space-y-5 max-w-4xl mx-auto w-full">
+      
+      <!-- Thẻ thông tin máy tính -->
+      <div class="bg-white p-6 rounded-2xl border border-slate-300 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b pb-3">
+          <h2 class="font-extrabold text-sm text-blue-900 flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-blue-600"></i> Quản Lý Bản Quyền MathTex Pro
+          </h2>
+          <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Trọn Đời</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="p-3 bg-slate-50 border rounded-xl space-y-1">
+            <span class="text-slate-400 block font-semibold">Tình trạng giấy phép:</span>
+            <span class="font-bold text-emerald-700 text-sm">Bản quyền Vĩnh viễn (Đã kích hoạt)</span>
+          </div>
+          <div class="p-3 bg-slate-50 border rounded-xl space-y-1">
+            <span class="text-slate-400 block font-semibold">Tác giả & Hỗ trợ kỹ thuật:</span>
+            <span class="font-bold text-slate-800 text-sm">Thầy Phạm Minh Tuấn — 0979.410.414</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bảng giá các gói -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="bg-white p-5 rounded-2xl border border-slate-300 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-sm text-slate-700">Dùng Thử 3 Ngày</h3>
+            <p class="text-xl font-black text-slate-900 mt-2">0đ <span class="text-xs font-normal text-slate-400">/ 3 ngày</span></p>
+            <ul class="mt-3 space-y-2 text-xs text-slate-600">
+              <li>✔ Trải nghiệm Ngân Hàng Câu Hỏi</li>
+              <li>✔ Xuất file Word đơn lẻ</li>
+            </ul>
+          </div>
+          <button class="mt-4 w-full py-2 bg-slate-100 text-slate-600 font-bold rounded-xl text-xs">Miễn Phí</button>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border-2 border-blue-600 shadow-lg relative flex flex-col justify-between">
+          <div class="absolute -top-2.5 right-4 bg-blue-600 text-white font-bold text-[9px] uppercase px-2 py-0.5 rounded-full">Phổ biến</div>
+          <div>
+            <h3 class="font-bold text-sm text-blue-700">Gói 1 Năm Giáo Viên</h3>
+            <p class="text-xl font-black text-slate-900 mt-2">199.000đ <span class="text-xs font-normal text-slate-400">/ năm</span></p>
+            <ul class="mt-3 space-y-2 text-xs text-slate-600">
+              <li>✔ Đầy đủ 9 nhánh chuyên đề Lớp 10, 11, 12</li>
+              <li>✔ Đảo đề thi GDPT 2018 không giới hạn</li>
+              <li>✔ Xuất file Word gạch chân đáp án</li>
+            </ul>
+          </div>
+          <button onclick="openVietQRModal(199000, 'Gói 1 Năm')" class="mt-4 w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs shadow">Đăng Ký Ngay</button>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-300 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-sm text-slate-800">Bản Quyền Vĩnh Viễn</h3>
+            <p class="text-xl font-black text-slate-900 mt-2">499.000đ <span class="text-xs font-normal text-slate-400">/ trọn đời</span></p>
+            <ul class="mt-3 space-y-2 text-xs text-slate-600">
+              <li>✔ Sở hữu trọn đời không cần gia hạn</li>
+              <li>✔ Mở khóa toàn diện trên Web & Máy tính</li>
+              <li>✔ Hỗ trợ kỹ thuật trực tiếp Thầy Tuấn</li>
+            </ul>
+          </div>
+          <button onclick="openVietQRModal(499000, 'Gói Vĩnh Viễn')" class="mt-4 w-full py-2 bg-slate-900 hover:bg-black text-white font-bold rounded-xl text-xs">Mua Trọn Đời</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: HƯỚNG DẪN SỬ DỤNG -->
+    <!-- ========================================================================= -->
+    <div id="tab4-content" class="hidden bg-white p-6 rounded-2xl border border-slate-300 shadow-sm space-y-4 max-w-4xl mx-auto w-full text-xs leading-relaxed text-slate-700">
+      <h2 class="font-extrabold text-sm text-blue-900 border-b pb-2">HƯỚNG DẪN SỬ DỤNG HỆ THỐNG MATHTEX PRO WEB</h2>
+      <p><b>1. Tab Ngân hàng câu hỏi:</b> Chọn lớp và chuyên đề ở cây danh mục bên trái $\rightarrow$ Hệ thống tự động sinh số liệu ngẫu nhiên, vẽ đồ thị TikZ và hiển thị công thức bằng MathJax $\rightarrow$ Bấm <i>"Xuất File Word"</i> để tải về máy.</p>
+      <p><b>2. Tab Đảo đề thi GDPT 2018:</b> Dán file đề tổng hợp vào khung $\rightarrow$ Hệ thống tự động đếm câu hỏi Phần I, II, III $\rightarrow$ Bấm <i>"Bắt đầu Đảo Đề"</i> $\rightarrow$ Tải về file ZIP chứa đầy đủ các mã đề Word đã gạch chân đáp án đúng và ma trận Excel.</p>
+      <p><b>3. Tác giả & Kỹ thuật:</b> Thầy Phạm Minh Tuấn (TT GDNN - GDTX Trung Mỹ Tây) • SĐT/Zalo: 0979.410.414 • Email: pmtuan2609@gmail.com.</p>
+    </div>
+
+  </main>
+
+  <!-- ================= MODAL THANH TOÁN VIETQR ================= -->
+  <div id="vietqr-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl relative text-center">
+      <button onclick="closeModal('vietqr-modal')" class="absolute top-3.5 right-3.5 text-slate-400 hover:text-slate-600 text-lg">✕</button>
+      <div class="w-11 h-11 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 text-lg">
+        <i class="fa-solid fa-qrcode"></i>
+      </div>
+      <h3 class="font-black text-sm text-slate-800">Thanh Toán Quét Mã VietQR Tự Động</h3>
+      <p id="qr-desc" class="text-[11px] text-slate-500 mt-0.5">Kích hoạt tài khoản ngay sau khi thanh toán</p>
+      
+      <div class="my-3 p-2 bg-slate-50 border rounded-xl flex justify-center">
+        <img id="qr-image" src="" alt="Mã QR" class="w-44 h-44 object-contain rounded-lg">
+      </div>
+
+      <div class="text-left text-[11px] bg-slate-50 p-2.5 rounded-lg border text-slate-700 space-y-1">
+        <p><b>Chủ tài khoản:</b> PHAM MINH TUAN</p>
+        <p><b>Số điện thoại / Zalo:</b> 0979.410.414</p>
+        <p><b>Nội dung chuyển khoản:</b> <span class="text-blue-600 font-bold">MATHTEX VIP</span></p>
+      </div>
+
+      <button onclick="closeModal('vietqr-modal'); alert('Hệ thống đang kiểm tra giao dịch...');" class="w-full mt-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-xl text-xs">
+        Tôi Đã Chuyển Khoản Thành Công
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ĐẦY ĐỦ ================= -->
+  <script>
+    // Dữ liệu 9 nhánh lớn của cây TracNghiem_TLN
+    const TREE_DATA = [
+      {
+        id: "k12_mc",
+        title: "LỚP 12. TRẮC NGHIỆM NHIỀU LỰA CHỌN",
+        icon: "fa-book-bookmark",
+        children: [
+          {
+            title: "Chương I. Ứng dụng đạo hàm khảo sát hàm số",
+            items: [
+              { id: "k12_c1_khao_sat", name: "Dạng: Cực trị của hàm số cho bởi f'(x)" },
+              { id: "k12_c1_don_dieu", name: "Dạng: Xét tính đồng biến, nghịch biến" },
+              { id: "k12_c1_tiem_can", name: "Dạng: Tìm đường tiệm cận đứng và tiệm cận ngang" },
+              { id: "k12_c1_gtln_gtnn", name: "Dạng: Giá trị lớn nhất và nhỏ nhất trên đoạn" }
+            ]
+          },
+          {
+            title: "Chương III. Các số đặc trưng mẫu số liệu ghép nhóm",
+            items: [
+              { id: "k12_c3_thong_ke_mot", name: "Dạng: Tìm mốt của mẫu số liệu ghép nhóm" },
+              { id: "k12_c3_tu_phan_vi", name: "Dạng: Khoảng tứ phân vị của mẫu số liệu" },
+              { id: "k12_c3_do_lech_chuan", name: "Dạng: Phương sai và độ lệch chuẩn" }
+            ]
+          },
+          {
+            title: "Chương IV. Nguyên hàm và Tích phân",
+            items: [
+              { id: "k12_c4_nguyen_ham", name: "Dạng: Tìm nguyên hàm hàm số cơ bản" },
+              { id: "k12_c4_tich_phan_dien_tich", name: "Dạng: Tích phân tính diện tích hình phẳng" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "k12_ds",
+        title: "LỚP 12. TRẮC NGHIỆM ĐÚNG SAI",
+        icon: "fa-list-check",
+        children: [
+          {
+            title: "Chương IV. Tích phân & Ứng dụng thực tế",
+            items: [
+              { id: "k12_c4_tich_phan_vđv", name: "Đúng sai: Tích phân chuyển động hai vận động viên (Có đồ thị)" },
+              { id: "k12_c4_phong_xa", name: "Đúng sai: Bài toán thực tế phân rã phóng xạ vi phân m'(t)" }
+            ]
+          },
+          {
+            title: "Chương I. Khảo sát hàm số thực tế",
+            items: [
+              { id: "k12_ds_c1_chuyen_dong", name: "Đúng sai: Chuyển động và bài toán tối ưu thực tế" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "k12_sa",
+        title: "LỚP 12. TRẮC NGHIỆM TRẢ LỜI NGẮN",
+        icon: "fa-square-check",
+        children: [
+          {
+            title: "Chuyên đề tính toán nhanh",
+            items: [
+              { id: "k12_sa_bieu_thuc", name: "Trả lời ngắn: Tính giá trị biểu thức tham số" },
+              { id: "k12_sa_logarit", name: "Trả lời ngắn: Số nghiệm nguyên của bất phương trình" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "k11_mc",
+        title: "LỚP 11. TRẮC NGHIỆM NHIỀU LỰA CHỌN",
+        icon: "fa-book",
+        children: [
+          {
+            title: "Chương I. Phương trình lượng giác",
+            items: [
+              { id: "k11_c1_luong_giac", name: "Dạng: Nghiệm của phương trình lượng giác cơ bản" }
+            ]
+          },
+          {
+            title: "Chương VI. Mũ và Logarit",
+            items: [
+              { id: "k11_c6_mu_log", name: "Dạng: Tập xác định và đạo hàm hàm mũ, logarit" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "k11_ds",
+        title: "LỚP 11. TRẮC NGHIỆM ĐÚNG SAI",
+        icon: "fa-list-check",
+        children: [
+          {
+            title: "Chương IX. Xác suất có điều kiện",
+            items: [
+              { id: "k11_ds_xac_suat", name: "Đúng sai: Tính xác suất biến cố hợp và giao" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "k11_sa",
+        title: "LỚP 11. TRẮC NGHIỆM TRẢ LỜI NGẮN",
+        icon: "fa-square-check",
+        children: [
+          {
+            title: "Chuyên đề số liệu & dãy số",
+            items: [
+              { id: "k11_sa_cap_so_cong", name: "Trả lời ngắn: Tìm số hạng của cấp số cộng" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "k10_mc",
+        title: "LỚP 10. TRẮC NGHIỆM NHIỀU LỰA CHỌN",
+        icon: "fa-book-open",
+        children: [
+          {
+            title: "Chương II. Bất phương trình bậc nhất hai ẩn",
+            items: [
+              { id: "k10_c2_bpt", name: "Dạng: Miền nghiệm của bất phương trình bậc nhất hai ẩn" }
+            ]
+          },
+          {
+            title: "Chương IX. Phương pháp toạ độ trong mặt phẳng Oxy",
+            items: [
+              { id: "k10_c9_oxy", name: "Dạng: Phương trình đường thẳng và đường tròn" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "k10_ds",
+        title: "LỚP 10. TRẮC NGHIỆM ĐÚNG SAI",
+        icon: "fa-list-check",
+        children: [
+          {
+            title: "Chương VI. Thống kê số liệu",
+            items: [
+              { id: "k10_ds_thong_ke", name: "Đúng sai: Số trung bình và độ lệch chuẩn mẫu số liệu" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "k10_sa",
+        title: "LỚP 10. TRẮC NGHIỆM TRẢ LỜI NGẮN",
+        icon: "fa-square-check",
+        children: [
+          {
+            title: "Chuyên đề vectơ & thực tế",
+            items: [
+              { id: "k10_sa_vecto", name: "Trả lời ngắn: Độ dài vectơ tổng và hiệu" }
+            ]
+          }
+        ]
+      }
+    ];
+
+    let currentSelectedId = "k12_c1_khao_sat";
+    let currentQuestionData = null;
+    let showSolutionState = true;
+
+    // Khởi tạo cây danh mục
+    function renderTree() {
+      const container = document.getElementById("tree-container");
+      let html = "";
+
+      TREE_DATA.forEach((branch, bIdx) => {
+        html += `
+          <div class="tree-branch border border-slate-200 rounded-lg overflow-hidden bg-white mb-1.5 shadow-xs">
+            <div onclick="toggleBranch('branch-${bIdx}')" class="p-2 bg-slate-50 hover:bg-blue-50/50 cursor-pointer flex items-center justify-between font-bold text-slate-800 text-[11.5px]">
+              <span class="flex items-center gap-1.5 truncate">
+                <i class="fa-solid ${branch.icon} text-blue-600"></i> ${branch.title}
+              </span>
+              <i id="icon-branch-${bIdx}" class="fa-solid fa-chevron-down text-slate-400 text-[10px] transition-transform"></i>
+            </div>
+            <div id="branch-${bIdx}" class="p-1.5 space-y-1 bg-white">
+        `;
+
+        branch.children.forEach(ch => {
+          html += `
+            <div class="text-[11px] font-bold text-slate-500 uppercase px-2 pt-1.5">${ch.title}</div>
+          `;
+          ch.items.forEach(item => {
+            html += `
+              <div onclick="selectTopic('${item.id}', '${item.name}')" id="node-${item.id}" class="tree-item py-1.5 px-3 rounded cursor-pointer hover:bg-slate-100 text-[11.5px] text-slate-700 flex items-center gap-1.5 truncate transition">
+                <i class="fa-regular fa-file-lines text-slate-400 text-[10px]"></i> ${item.name}
+              </div>
+            `;
+          });
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function toggleBranch(id) {
+      const el = document.getElementById(id);
+      const icon = document.getElementById(`icon-${id}`);
+      el.classList.toggle("hidden");
+      icon.classList.toggle("-rotate-90");
+    }
+
+    function expandAllTree(open) {
+      TREE_DATA.forEach((_, idx) => {
+        const el = document.getElementById(`branch-${idx}`);
+        const icon = document.getElementById(`icon-branch-${idx}`);
+        if (open) {
+          el.classList.remove("hidden");
+          icon.classList.remove("-rotate-90");
+        } else {
+          el.classList.add("hidden");
+          icon.classList.add("-rotate-90");
+        }
+      });
+    }
+
+    function selectTopic(id, name) {
+      document.querySelectorAll(".tree-item").forEach(el => el.classList.remove("tree-node-active"));
+      const selectedEl = document.getElementById(`node-${id}`);
+      if (selectedEl) selectedEl.classList.add("tree-node-active");
+
+      currentSelectedId = id;
+      document.getElementById("current-topic-title").innerText = name;
+      loadQuestion(id);
+    }
+
+    async function loadQuestion(topicId) {
+      const area = document.getElementById("question-preview-area");
+      area.innerHTML = `
+        <div class="py-24 text-center text-blue-600">
+          <i class="fa-solid fa-spinner fa-spin text-3xl mb-3"></i>
+          <p class="font-bold text-xs">Đang sinh câu hỏi ngẫu nhiên số liệu...</p>
+        </div>
+      `;
+
+      try {
+        const res = await fetch(`/api/generate?topic=${topicId}`);
+        const data = await res.json();
+        currentQuestionData = data;
+
+        let choicesHtml = "";
+        if (data.type === "mc") {
+          choicesHtml = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
+              ${data.choices.map(c => `
+                <div class="p-2.5 rounded-lg border ${c.includes('(Đúng)') ? 'bg-red-50 border-red-300 font-bold text-red-700' : 'bg-slate-50 border-slate-200 text-slate-700'} text-xs">
+                  ${c}
+                </div>
+              `).join('')}
+            </div>
+          `;
+        } else if (data.type === "tf") {
+          choicesHtml = `
+            <div class="space-y-2 mt-3">
+              ${data.choices.map(c => `
+                <div class="p-2.5 rounded-lg border ${c.includes('[ĐÚNG]') ? 'bg-emerald-50 border-emerald-300 font-bold text-emerald-800' : 'bg-slate-50 border-slate-200 text-slate-700'} text-xs">
+                  ${c}
+                </div>
+              `).join('')}
+            </div>
+          `;
+        } else {
+          choicesHtml = `
+            <div class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs font-bold text-blue-900">
+              ${data.choices[0] || ""}
+            </div>
+          `;
+        }
+
+        area.innerHTML = `
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 font-medium leading-relaxed">
+            <span class="text-blue-700 font-black mr-1.5"><i class="fa-solid fa-cube text-xs"></i> Câu hỏi:</span>
+            ${data.caudan}
+          </div>
+          ${choicesHtml}
+          <div id="solution-box" class="${showSolutionState ? '' : 'hidden'} mt-5 p-4 bg-emerald-50/80 border border-emerald-200 rounded-xl">
+            <div class="font-bold text-emerald-800 text-xs mb-1.5 flex items-center gap-1.5">
+              <i class="fa-solid fa-lightbulb text-amber-500"></i> Lời giải chi tiết:
+            </div>
+            <p class="text-xs text-emerald-950 leading-relaxed">${data.loigiai}</p>
+          </div>
+        `;
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          MathJax.typesetPromise();
+        }
+      } catch (err) {
+        area.innerHTML = `<div class="p-4 text-red-500 text-xs">Lỗi kết nối máy chủ: ${err.message}</div>`;
+      }
+    }
+
+    function refreshQuestion() {
+      if (currentSelectedId) loadQuestion(currentSelectedId);
+    }
+
+    function toggleSolution() {
+      showSolutionState = !showSolutionState;
+      const box = document.getElementById("solution-box");
+      if (box) box.classList.toggle("hidden", !showSolutionState);
+    }
+
+    function downloadSingleWord() {
+      if (!currentSelectedId) return;
+      window.location.href = `/api/download-word?topic=${currentSelectedId}&show_solution=${showSolutionState}`;
+    }
+
+    function copyTeXCode() {
+      if (!currentQuestionData) return;
+      const text = `\\begin{ex}\n${currentQuestionData.caudan}\n\\loigiai{${currentQuestionData.loigiai}}\n\\end{ex}`;
+      navigator.clipboard.writeText(text);
+      alert("Đã sao chép mã LaTeX vào bộ nhớ tạm!");
+    }
+
+    // Switch Tabs
+    function switchTab(idx) {
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`tab${i}-content`).classList.add('hidden');
+        document.getElementById(`nav-tab${i}`).className = "py-3 px-5 border-b-2 border-transparent text-slate-600 hover:text-blue-600 flex items-center gap-2 transition hover:bg-slate-50";
+      }
+      document.getElementById(`tab${idx}-content`).classList.remove('hidden');
+      document.getElementById(`nav-tab${idx}`).className = "py-3 px-5 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 transition font-bold bg-blue-50/40";
+    }
+
+    // Tab 2: Phân tích đề thi nhập vào
+    function analyzeExamInput() {
+      const txt = document.getElementById("exam-source-text").value;
+      const summary = document.getElementById("exam-detect-summary");
+      if (!txt.trim()) {
+        summary.innerHTML = "<b>Kết quả nhận diện tự động:</b> Chưa nhập câu hỏi nào.";
+        return;
+      }
+      const n_ex = (txt.match(/\\begin\{ex\}/g) || []).length;
+      const n_cau = (txt.match(/(?:Câu|\bCÂU)\s*\d+[\.\:]/g) || []).length;
+      const total = Math.max(n_ex, n_cau);
+      summary.innerHTML = `<b>Kết quả nhận diện tự động:</b> Phát hiện khoảng <b>${total}</b> câu hỏi trắc nghiệm GDPT 2018 sẵn sàng xáo trộn.`;
+    }
+
+    function pasteSampleExam() {
+      document.getElementById("exam-source-text").value = 
+`\\begin{ex}
+Cho hàm số f(x) có f'(x) = (x+1)^2*(x-1)^3*(2-x). Hàm số có điểm cực đại là:
+\\choice
+{x = -1}
+{x = 1}
+{\\True x = 2}
+{x = -1 và x = 2}
+\\loigiai{Nghiệm bội lẻ x = 2 làm đạo hàm đổi dấu từ dương sang âm.}
+\\end{ex}
+
+\\begin{ex}
+Có hai vận động viên A và B chạy trên đường thẳng với vận tốc v1(t) và parabol v2(t). Các mệnh đề sau đúng hay sai?
+\\choiceTF
+{\\True Quãng đường vận động viên A đi được sau 30s là tích phân từ 0 đến 30 của v1(t)dt}
+{Tổng diện tích tô đậm bằng khoảng cách giữa 2 vận động viên}
+{\\True Parabol vận tốc v2(t) có công thức -1/150*(t^2 - 40t - 600)}
+{Tại t = 10s, vận động viên B dẫn trước vận động viên A một khoảng 4,3m}
+\\end{ex}`;
+      analyzeExamInput();
+    }
+
+    async function startMixingExam() {
+      const rawText = document.getElementById("exam-source-text").value.trim();
+      const numCodes = parseInt(document.getElementById("dao-num-codes").value) || 4;
+      const startCode = parseInt(document.getElementById("dao-start-code").value) || 101;
+      const showSol = document.getElementById("dao-chk-solution").checked;
+
+      const pBox = document.getElementById("mix-progress-box");
+      const pBar = document.getElementById("mix-progress-bar");
+      const pStatus = document.getElementById("mix-status-lbl");
+      const pPercent = document.getElementById("mix-percent-lbl");
+      const btn = document.getElementById("btn-start-mix");
+
+      pBox.classList.remove("hidden");
+      btn.disabled = true;
+      pStatus.innerText = "Đang xáo trộn câu hỏi và hoán vị đáp án...";
+      pBar.style.width = "40%";
+      pPercent.innerText = "40%";
+
+      try {
+        const res = await fetch("/api/shuffle-word", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            raw_text: rawText,
+            num_codes: numCodes,
+            start_code: startCode,
+            show_solution: showSol
+          })
+        });
+
+        if (!res.ok) throw new Error("Lỗi khi tạo gói Word");
+
+        pBar.style.width = "85%";
+        pPercent.innerText = "85%";
+        pStatus.innerText = "Đang nén các mã đề thành gói ZIP...";
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Bo_De_Dao_GDPT2018_${startCode}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+
+        pBar.style.width = "100%";
+        pPercent.innerText = "100%";
+        pStatus.innerText = "✔ Hoàn tất! Đã tải file ZIP về máy.";
+      } catch (err) {
+        alert("Lỗi: " + err.message);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function openVietQRModal(amount, title) {
+      document.getElementById("qr-desc").innerText = `Thanh toán ${title} — ${amount.toLocaleString('vi-VN')}đ`;
+      document.getElementById("qr-image").src = `https://api.vietqr.io/image/970422-0979410414-compact2.jpg?amount=${amount}&addInfo=MATHTEX%20VIP`;
+      document.getElementById("vietqr-modal").classList.remove("hidden");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add("hidden");
+    }
+
+    function filterTree() {
+      const q = document.getElementById("tree-search").value.toLowerCase();
+      document.querySelectorAll(".tree-item").forEach(item => {
+        const txt = item.innerText.toLowerCase();
+        item.style.display = txt.includes(q) ? "flex" : "none";
+      });
+    }
+
+    // Tự động chạy khi mở web
+    window.onload = () => {
+      renderTree();
+      selectTopic("k12_c1_khao_sat", "Toán 12 — Khảo sát hàm số (Cực trị)");
+    };
+  </script>
+</body>
+</html>

@@ -81,9 +81,21 @@ def render_tikz_to_png(tikz_code: str) -> Optional[bytes]:
 
     return None
 
-# ----------------- SINH ĐỒ THỊ BẰNG MATPLOTLIB (TỰ ĐỘNG, KHÔNG CẦN TEX) -----------------
+# ----------------- SINH ĐỒ THỊ VẬN ĐỘNG VIÊN -----------------
 def generate_runners_graph_png() -> Optional[bytes]:
-    """Vẽ đồ thị 2 vận động viên kèm diện tích gạch chéo bằng matplotlib và xuất ra PNG"""
+    """Vẽ đồ thị 2 vận động viên: Ưu tiên TikZ qua Kroki/QuickLaTeX, dự phòng matplotlib"""
+    tikz_vdv = r"""\begin{tikzpicture}[>=stealth, scale=0.15]
+\draw[->] (-2,0) -- (36,0) node[below] {$t$};
+\draw[->] (0,-1) -- (0,10.5) node[left] {$v$};
+\fill[pattern=north east lines] plot[domain=0:10] (\x, {-(\x/10)^3/6 + 7*\x/60 + 5}) -- plot[domain=10:0] (\x, {-1/150*(\x^2 - 40*\x - 600)}) -- cycle;
+\fill[pattern=north east lines] plot[domain=10:30] (\x, {-1/150*(\x^2 - 40*\x - 600)}) -- plot[domain=30:10] (\x, {-(\x/10)^3/6 + 7*\x/60 + 5}) -- cycle;
+\draw[thick, blue, domain=0:33] plot (\x, {-(\x/10)^3/6 + 7*\x/60 + 5});
+\draw[thick, red, domain=0:33] plot (\x, {-1/150*(\x^2 - 40*\x - 600)});
+\end{tikzpicture}"""
+    img = render_tikz_to_png(tikz_vdv)
+    if img:
+        return img
+
     try:
         import matplotlib
         matplotlib.use('Agg')
@@ -97,21 +109,16 @@ def generate_runners_graph_png() -> Optional[bytes]:
         fig, ax = plt.subplots(figsize=(4.2, 2.6), dpi=150)
         ax.plot(t, v1, label=r'$v_1(t)$', color='#1d4ed8', lw=1.8)
         ax.plot(t, v2, label=r'$v_2(t)$', color='#dc2626', lw=1.8)
-
-        # Tô sọc vùng diện tích giữa 2 đồ thị
         t_sub1 = np.linspace(0, 10, 50)
         ax.fill_between(t_sub1, -1/6000 * t_sub1**3 + 7/60 * t_sub1 + 5, -1/150 * (t_sub1**2 - 40*t_sub1 - 600), 
                         hatch='//', facecolor='none', edgecolor='#64748b', lw=0.5)
-
         t_sub2 = np.linspace(10, 30, 80)
         ax.fill_between(t_sub2, -1/6000 * t_sub2**3 + 7/60 * t_sub2 + 5, -1/150 * (t_sub2**2 - 40*t_sub2 - 600), 
                         hatch='//', facecolor='none', edgecolor='#64748b', lw=0.5)
-
         ax.axvline(10, color='#94a3b8', linestyle='--', lw=0.8)
         ax.axvline(30, color='#94a3b8', linestyle='--', lw=0.8)
         ax.set_xlabel('t (giây)', fontsize=9)
         ax.set_ylabel('v (m/s)', fontsize=9)
-        ax.set_title('Đồ thị vận tốc 2 vận động viên', fontsize=9.5, fontweight='bold', color='#1e293b')
         ax.legend(loc='lower center', fontsize=8, frameon=False, ncol=2)
         plt.tight_layout()
 
@@ -229,6 +236,44 @@ def generate_question_data(topic_id: str):
             "Sau 15 ngày = 3 chu kỳ bán rã, còn m0 / 8 mg."
         )
         return {"caudan": caudan, "choices": choices, "loigiai": loigiai, "type": "tf", "image_bytes": None}
+
+    elif topic_id == "k12_c1_don_dieu":
+        a = random.randint(1, 4)
+        caudan = f"Hàm số y = x^3 - 3x^2 + {a} đồng biến trên khoảng nào dưới đây?"
+        choices = ["A. (0; 2)", "B. (-∞; 0) và (2; +∞) (Đúng)", "C. (2; +∞)", "D. (-∞; 2)"]
+        loigiai = "Ta có y' = 3x^2 - 6x = 3x(x - 2). Cho y' > 0 <=> x < 0 hoặc x > 2. Do đó hàm số đồng biến trên (-∞; 0) và (2; +∞)."
+        return {"caudan": caudan, "choices": choices, "loigiai": loigiai, "type": "mc", "image_bytes": None}
+
+    elif topic_id == "k12_c1_tiem_can":
+        a = random.randint(1, 5)
+        caudan = f"Số đường tiệm cận đứng và tiệm cận ngang của đồ thị hàm số y = (2x - 1) / (x - {a}) là:"
+        choices = ["A. 1", "B. 2 (Đúng)", "C. 3", "D. 0"]
+        loigiai = f"Tiệm cận đứng x = {a} (do mẫu bằng 0 tại x = {a}). Tiệm cận ngang y = 2 (do lim y khi x -> vô cùng = 2). Tổng cộng có 2 đường tiệm cận."
+        return {"caudan": caudan, "choices": choices, "loigiai": loigiai, "type": "mc", "image_bytes": None}
+
+    elif topic_id == "k12_c1_gtln_gtnn":
+        caudan = "Giá trị lớn nhất của hàm số f(x) = x^4 - 2x^2 + 3 trên đoạn [0; 2] bằng:"
+        choices = ["A. 3", "B. 2", "C. 11 (Đúng)", "D. 12"]
+        loigiai = "f'(x) = 4x^3 - 4x = 4x(x^2 - 1). Nghiệm trên [0; 2] là x = 0, x = 1. Ta có f(0) = 3, f(1) = 2, f(2) = 11. Vậy GTLN = 11."
+        return {"caudan": caudan, "choices": choices, "loigiai": loigiai, "type": "mc", "image_bytes": None}
+
+    elif topic_id == "k11_c1_luong_giac":
+        caudan = "Tất cả các nghiệm của phương trình sin(x) = 1/2 là:"
+        choices = ["A. x = π/6 + k2π và x = 5π/6 + k2π (Đúng)", "B. x = π/3 + k2π", "C. x = ±π/6 + k2π", "D. x = π/6 + kπ"]
+        loigiai = "sin(x) = sin(π/6) <=> x = π/6 + k2π hoặc x = π - π/6 + k2π = 5π/6 + k2π (k thuộc Z)."
+        return {"caudan": caudan, "choices": choices, "loigiai": loigiai, "type": "mc", "image_bytes": None}
+
+    elif topic_id == "k10_c2_bpt":
+        caudan = "Điểm nào sau đây thuộc miền nghiệm của bất phương trình 2x + y - 3 > 0?"
+        choices = ["A. (0; 0)", "B. (1; 1)", "C. (2; 1) (Đúng)", "D. (-1; 2)"]
+        loigiai = "Thay tọa độ (2; 1) vào: 2*(2) + 1 - 3 = 2 > 0 (thỏa mãn). Vậy điểm (2; 1) thuộc miền nghiệm."
+        return {"caudan": caudan, "choices": choices, "loigiai": loigiai, "type": "mc", "image_bytes": None}
+
+    elif topic_id == "k10_sa_vecto":
+        caudan = "Cho tam giác ABC đều cạnh a = 4. Tính độ dài của vectơ tổng u = AB + AC?"
+        choices = ["Đáp án: 6,93 (4√3)"]
+        loigiai = "Gọi M là trung điểm BC, ta có AB + AC = 2AM = 2*(a*sqrt(3)/2) = a*sqrt(3) = 4*sqrt(3) ≈ 6,93."
+        return {"caudan": caudan, "choices": choices, "loigiai": loigiai, "type": "sa", "image_bytes": None}
 
     elif topic_id == "k12_sa_bieu_thuc":
         a = random.randint(2, 6)
