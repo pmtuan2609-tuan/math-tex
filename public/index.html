@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathTex Pro Web — Soạn Đề & Đảo Đề GDPT 2018 Xuất Word</title>
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Cấu hình MathJax hiển thị công thức Toán học -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans antialiased">
+
+  <!-- HEADER -->
+  <header class="bg-gradient-to-r from-blue-700 via-blue-800 to-indigo-900 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3.5 flex justify-between items-center">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 shadow-inner">
+          <i class="fa-solid fa-cube text-xl text-yellow-300"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-black tracking-wide leading-tight flex items-center gap-2">
+            MathTex Pro <span class="text-xs bg-yellow-400 text-slate-900 px-2 py-0.5 rounded font-black tracking-normal">WEB 2026</span>
+          </h1>
+          <p class="text-[11px] text-blue-200">Ngân hàng câu hỏi & Đảo đề thi GDPT 2018 xuất Word</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <div class="hidden sm:flex items-center space-x-1.5 bg-blue-900/60 text-emerald-300 text-xs px-3 py-1.5 rounded-full border border-blue-500/30 font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Bản quyền Vĩnh viễn (Đã kích hoạt)</span>
+        </div>
+        <button onclick="openModal('pricing-modal')" class="bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-slate-900 font-extrabold text-xs px-4 py-2 rounded-lg transition shadow-md flex items-center gap-1.5">
+          <i class="fa-solid fa-crown text-amber-900"></i> Nâng Cấp VIP
+        </button>
+        <button onclick="openModal('auth-modal')" class="bg-white/10 hover:bg-white/20 text-white font-semibold text-xs px-3.5 py-2 rounded-lg transition border border-white/20">
+          <i class="fa-regular fa-user mr-1"></i> Tài khoản
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="bg-white border-b border-slate-200 sticky top-[60px] z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 flex space-x-8 text-sm font-bold">
+      <button id="tab1-btn" onclick="switchTab(1)" class="py-3.5 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 transition">
+        <i class="fa-solid fa-wand-magic-sparkles text-blue-500"></i> 1. Sinh Câu Hỏi & Xuất Word
+      </button>
+      <button id="tab2-btn" onclick="switchTab(2)" class="py-3.5 border-b-2 border-transparent text-slate-500 hover:text-blue-600 flex items-center gap-2 transition">
+        <i class="fa-solid fa-shuffle text-slate-400"></i> 2. Đảo Đề Thi & Tạo Mã Đề Word
+      </button>
+      <button id="tab3-btn" onclick="switchTab(3)" class="py-3.5 border-b-2 border-transparent text-slate-500 hover:text-blue-600 flex items-center gap-2 transition">
+        <i class="fa-solid fa-credit-card text-slate-400"></i> 3. Bảng Giá & Nạp VIP
+      </button>
+    </div>
+  </nav>
+
+  <!-- BODY CONTENT -->
+  <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
+
+    <!-- TAB 1: SINH CÂU HỎI TRẮC NGHIỆM -->
+    <section id="tab1-content" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Panel bên trái (Cấu hình) -->
+      <div class="lg:col-span-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <h2 class="font-extrabold text-sm text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-sliders text-blue-600"></i> Chọn Dạng Toán Sinh Đề
+          </h2>
+          <span class="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded">Tự Động</span>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1.5">Chuyên đề toán học GDPT 2018:</label>
+          <select id="topic_select" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-semibold focus:ring-2 focus:ring-blue-500 outline-none bg-slate-50">
+            <option value="k12_c1_khao_sat">Toán 12 — Khảo sát hàm số (Cực trị, Đơn điệu)</option>
+            <option value="k12_c3_thong_ke_mot">Toán 12 — Thống kê: Tìm mốt mẫu số liệu ghép nhóm</option>
+            <option value="k12_c4_tich_phan_vđv">Toán 12 — Đúng/Sai: Tích phân vận động viên & Diện tích</option>
+            <option value="k12_c4_phong_xa">Toán 12 — Đúng/Sai: Phân rã phóng xạ m'(t) = k.m(t)</option>
+            <option value="k12_sa_bieu_thuc">Toán 12 — Trả lời ngắn: Biểu thức tham số</option>
+          </select>
+        </div>
+
+        <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-800 leading-relaxed">
+          <i class="fa-solid fa-circle-info mr-1 text-amber-600"></i>
+          Hệ thống sẽ tính toán số liệu ngẫu nhiên, lập bảng tần số, vẽ đồ thị và tạo lời giải bước theo bước.
+        </div>
+
+        <div class="space-y-2.5 pt-2">
+          <button onclick="generateQuestion()" id="btn-gen" class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold py-3 px-4 rounded-xl transition flex justify-center items-center gap-2 shadow-md shadow-blue-500/20 text-xs">
+            <i class="fa-solid fa-bolt"></i> Sinh Câu Hỏi Mới (Ngẫu Nhiên)
+          </button>
+          
+          <button onclick="downloadWordSingle()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.99] text-white font-bold py-3 px-4 rounded-xl transition flex justify-center items-center gap-2 shadow-md shadow-emerald-500/20 text-xs">
+            <i class="fa-solid fa-file-word text-base"></i> Tải File Word (.docx) Đã Gạch Chân
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel bên phải (Xem trước công thức MathJax) -->
+      <div class="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center pb-3 mb-4 border-b border-slate-100">
+            <h3 class="font-extrabold text-slate-800 text-sm flex items-center gap-2">
+              <i class="fa-regular fa-eye text-blue-600"></i> Xem Trước Câu Hỏi (MathJax TeX)
+            </h3>
+            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-medium">Render Chuẩn</span>
+          </div>
+
+          <div id="preview-box" class="space-y-4 text-slate-800 text-sm">
+            <div class="p-8 text-center text-slate-400">
+              <i class="fa-solid fa-wand-magic-sparkles text-3xl mb-2 text-slate-300"></i>
+              <p>Bấm nút <b>"Sinh Câu Hỏi Mới"</b> để tạo câu hỏi tự động và xem công thức tại đây.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
+          <span>Định dạng Word: Times New Roman 12pt • Đáp án đúng có gạch chân</span>
+          <span class="text-blue-600 font-semibold cursor-pointer hover:underline" onclick="generateQuestion()">Đổi số liệu khác ↻</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- TAB 2: ĐẢO ĐỀ THI & TẠO FILE WORD -->
+    <section id="tab2-content" class="hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+      <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+        <div>
+          <h2 class="font-extrabold text-base text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-shuffle text-blue-600"></i> Đảo Đề Thi Trắc Nghiệm GDPT 2018 Xuất Word
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">Hỗ trợ xáo trộn câu hỏi, hoán vị các đáp án A-B-C-D và tự động xuất các mã đề Word (.docx) kèm đáp án gạch chân.</p>
+        </div>
+        <span class="bg-purple-50 text-purple-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-purple-200">
+          Xuất gói ZIP nhiều mã đề
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1.5">Số lượng mã đề cần tạo:</label>
+          <input type="number" id="num_codes" value="4" min="1" max="10" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1.5">Mã đề bắt đầu:</label>
+          <input type="number" id="start_code" value="101" class="w-full border border-slate-300 rounded-xl p-2.5 text-xs font-bold">
+        </div>
+        <div class="flex items-end">
+          <label class="flex items-center space-x-2 text-xs font-semibold text-slate-700 pb-3 cursor-pointer">
+            <input type="checkbox" id="chk_sol" checked class="w-4 h-4 text-blue-600 rounded">
+            <span>Kèm lời giải chi tiết vào cuối đề</span>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-600 mb-1.5">Nội dung đề thi gốc (Dán mã LaTeX hoặc các câu trắc nghiệm):</label>
+        <textarea id="raw_exam_input" rows="9" placeholder="\begin{ex}&#10;Cho hàm số y = f(x) có đạo hàm... Hàm số đạt cực đại tại:&#10;\choice&#10;{x = 1}&#10;{\True x = 2}&#10;{x = -1}&#10;{x = 0}&#10;\loigiai{Lời giải chi tiết...}&#10;\end{ex}" class="w-full border border-slate-300 rounded-xl p-3 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none leading-relaxed bg-slate-50"></textarea>
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <button onclick="shuffleAndExportZip()" id="btn-shuffle" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-3.5 px-6 rounded-xl transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
+          <i class="fa-solid fa-file-zipper text-base"></i> Bắt đầu Đảo Đề & Tải Gói File Word (.zip)
+        </button>
+        <button onclick="fillSampleExam()" class="text-xs text-blue-600 hover:underline font-semibold">
+          Dán đề thi mẫu GDPT 2018 để thử nghiệm 📋
+        </button>
+      </div>
+    </section>
+
+    <!-- TAB 3: BẢNG GIÁ & GÓI VIP -->
+    <section id="tab3-content" class="hidden space-y-6">
+      <div class="text-center max-w-xl mx-auto py-4">
+        <h2 class="text-2xl font-black text-slate-800">Bảng Giá Nâng Cấp MathTex Pro</h2>
+        <p class="text-xs text-slate-500 mt-1">Mở khóa toàn bộ ngân hàng câu hỏi, đảo đề không giới hạn và xuất file Word chuẩn mực.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <!-- Gói 1 -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-base text-slate-700">Dùng Thử Miễn Phí</h3>
+            <p class="text-2xl font-black text-slate-900 mt-2">0đ <span class="text-xs font-normal text-slate-400">/ 3 ngày</span></p>
+            <ul class="mt-4 space-y-2.5 text-xs text-slate-600">
+              <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Sinh câu hỏi mẫu Toán 12</li>
+              <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Xuất file Word đơn lẻ</li>
+              <li class="text-slate-400"><i class="fa-solid fa-xmark text-slate-300 mr-2"></i>Đảo nhiều mã đề ZIP</li>
+            </ul>
+          </div>
+          <button class="mt-6 w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs">Đang Sử Dụng</button>
+        </div>
+
+        <!-- Gói 2: Phổ biến -->
+        <div class="bg-white p-6 rounded-2xl border-2 border-blue-600 shadow-xl relative flex flex-col justify-between">
+          <div class="absolute -top-3 right-6 bg-blue-600 text-white font-bold text-[10px] uppercase px-2.5 py-1 rounded-full tracking-wider">
+            Phổ Biến Nhất
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-blue-700">Gói 1 Năm (Giáo Viên)</h3>
+            <p class="text-2xl font-black text-slate-900 mt-2">199.000đ <span class="text-xs font-normal text-slate-400">/ năm</span></p>
+            <ul class="mt-4 space-y-2.5 text-xs text-slate-600">
+              <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Toàn bộ ngân hàng câu hỏi 10, 11, 12</li>
+              <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Đảo đề thi không giới hạn số mã đề</li>
+              <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Xuất file Word gạch chân đáp án</li>
+              <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Cập nhật đề thi mới nhất 2026</li>
+            </ul>
+          </div>
+          <button onclick="openModal('pricing-modal')" class="mt-6 w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs shadow-md">Đăng Ký Ngay</button>
+        </div>
+
+        <!-- Gói 3: Vĩnh viễn -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-base text-slate-700">Bản Quyền Vĩnh Viễn</h3>
+            <p class="text-2xl font-black text-slate-900 mt-2">499.000đ <span class="text-xs font-normal text-slate-400">/ trọn đời</span></p>
+            <ul class="mt-4 space-y-2.5 text-xs text-slate-600">
+              <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Sở hữu trọn đời không gia hạn</li>
+              <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Đầy đủ tính năng Desktop & Web</li>
+              <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Hỗ trợ kỹ thuật trực tiếp Thầy Tuấn</li>
+            </ul>
+          </div>
+          <button onclick="openModal('pricing-modal')" class="mt-6 w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl text-xs">Mua Trọn Đời</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL THANH TOÁN QR -->
+  <div id="pricing-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+      <button onclick="closeModal('pricing-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">✕</button>
+      <div class="text-center">
+        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+          <i class="fa-solid fa-qrcode"></i>
+        </div>
+        <h3 class="font-black text-base text-slate-800">Thanh Toán Quét Mã VietQR Tự Động</h3>
+        <p class="text-xs text-slate-500 mt-1">Quét mã bằng app ngân hàng để kích hoạt tự động sau 10 giây</p>
+        
+        <div class="my-4 p-3 bg-slate-50 border rounded-xl flex justify-center">
+          <img src="https://api.vietqr.io/image/970422-0979410414-compact2.jpg?amount=199000&addInfo=MATHTEX%20VIP" alt="Mã QR" class="w-48 h-48 object-contain rounded-lg shadow-sm">
+        </div>
+
+        <div class="text-left text-xs bg-slate-50 p-3 rounded-lg border text-slate-600 space-y-1">
+          <p><b>Chủ tài khoản:</b> PHAM MINH TUAN</p>
+          <p><b>Số điện thoại / Zalo:</b> 0979.410.414</p>
+          <p><b>Nội dung chuyển khoản:</b> <span class="text-blue-600 font-bold">MATHTEX VIP</span></p>
+        </div>
+
+        <button onclick="closeModal('pricing-modal'); alert('Đang chờ hệ thống kiểm tra giao dịch...');" class="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs">
+          Tôi Đã Chuyển Khoản
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ĐĂNG NHẬP -->
+  <div id="auth-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl relative">
+      <button onclick="closeModal('auth-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">✕</button>
+      <h3 class="font-black text-base text-slate-800 text-center mb-1">Đăng Nhập Tài Khoản</h3>
+      <p class="text-xs text-slate-500 text-center mb-4">Đồng bộ lịch sử đề thi & bản quyền của bạn</p>
+      
+      <div class="space-y-3">
+        <button onclick="alert('Đã kết nối Google OAuth!'); closeModal('auth-modal');" class="w-full py-2.5 border border-slate-300 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-2">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-4 h-4"> Đăng nhập với Google
+        </button>
+        <div class="text-center text-[10px] text-slate-400">HOẶC DÙNG EMAIL</div>
+        <input type="email" placeholder="Email của bạn" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-blue-500">
+        <input type="password" placeholder="Mật khẩu" class="w-full border rounded-xl p-2.5 text-xs outline-none focus:ring-2 focus:ring-blue-500">
+        <button onclick="closeModal('auth-modal'); alert('Đăng nhập thành công!');" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs">
+          Đăng Nhập
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mt-auto">
+    MathTex Pro Web 2026 • Bản quyền thuộc Thầy Phạm Minh Tuấn & Thầy Việt Hà
+  </footer>
+
+  <!-- JAVASCRIPT XỬ LÝ -->
+  <script>
+    function switchTab(idx) {
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById(`tab${i}-content`).classList.add('hidden');
+        document.getElementById(`tab${i}-btn`).className = "py-3.5 border-b-2 border-transparent text-slate-500 hover:text-blue-600 flex items-center gap-2 transition";
+      }
+      document.getElementById(`tab${idx}-content`).classList.remove('hidden');
+      document.getElementById(`tab${idx}-btn`).className = "py-3.5 border-b-2 border-blue-600 text-blue-600 flex items-center gap-2 transition font-bold";
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+    let currentQuestionData = null;
+
+    async function generateQuestion() {
+      const topic = document.getElementById('topic_select').value;
+      const preview = document.getElementById('preview-box');
+      preview.innerHTML = `
+        <div class="py-8 text-center text-blue-600">
+          <i class="fa-solid fa-spinner fa-spin text-2xl mb-2"></i>
+          <p class="font-semibold text-xs">Đang sinh câu hỏi ngẫu nhiên số liệu...</p>
+        </div>`;
+      
+      try {
+        const res = await fetch(`/api/generate?topic=${topic}`);
+        const data = await res.json();
+        currentQuestionData = data;
+        
+        preview.innerHTML = `
+          <div class="font-black text-blue-700 text-sm mb-2 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 bg-blue-600 rounded-full"></span> Câu hỏi:
+          </div>
+          <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-slate-800 leading-relaxed">${data.caudan}</div>
+          
+          <div class="mt-4 font-bold text-xs text-slate-700">Các phương án lựa chọn:</div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
+            ${data.choices.map(c => `
+              <div class="p-2.5 rounded-lg border ${c.includes('(Đúng)') || c.includes('[ĐÚNG]') ? 'bg-red-50 border-red-300 font-bold text-red-700' : 'bg-white border-slate-200 text-slate-700'} text-xs">
+                ${c}
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="mt-5 p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl">
+            <div class="font-bold text-emerald-800 text-xs mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-lightbulb text-amber-500"></i> Lời giải chi tiết:
+            </div>
+            <p class="text-xs text-emerald-900 leading-relaxed">${data.loigiai}</p>
+          </div>
+        `;
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          MathJax.typesetPromise();
+        }
+      } catch (err) {
+        preview.innerHTML = `<p class="text-red-500 text-xs">Lỗi khi gọi API: ${err.message}</p>`;
+      }
+    }
+
+    function downloadWordSingle() {
+      const topic = document.getElementById('topic_select').value;
+      window.location.href = `/api/download-word?topic=${topic}&show_solution=true`;
+    }
+
+    async function shuffleAndExportZip() {
+      const rawText = document.getElementById('raw_exam_input').value.trim();
+      const numCodes = parseInt(document.getElementById('num_codes').value) || 4;
+      const startCode = parseInt(document.getElementById('start_code').value) || 101;
+      const showSol = document.getElementById('chk_sol').checked;
+      const btn = document.getElementById('btn-shuffle');
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang đảo đề & tạo file Word...`;
+
+      try {
+        const res = await fetch('/api/shuffle-word', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            raw_text: rawText,
+            num_codes: numCodes,
+            start_code: startCode,
+            show_solution: showSol
+          })
+        });
+
+        if (!res.ok) throw new Error("Lỗi xử lý file từ server");
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Bo_De_Thi_Dao_Word_${startCode}.zip`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      } catch (e) {
+        alert("Lỗi khi đảo đề: " + e.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-file-zipper text-base"></i> Bắt đầu Đảo Đề & Tải Gói File Word (.zip)`;
+      }
+    }
+
+    function fillSampleExam() {
+      document.getElementById('raw_exam_input').value = 
+`\\begin{ex}
+Mức thưởng Tết (triệu đồng) mà các công nhân một nhà máy nhận được cho bởi bảng ghép nhóm [5; 10): 13, [10; 15): 35, [15; 20): 47, [20; 25): 25. Mốt của mẫu số liệu ghép nhóm gần nhất với giá trị:
+\\choice
+{17{,}76}
+{16{,}67}
+{17{,}67}
+{\\True 16{,}76}
+\\loigiai{Áp dụng công thức tính mốt M0 ta được kết quả gần nhất 16,76.}
+\\end{ex}
+
+\\begin{ex}
+Cho hàm số f(x) có f'(x) = (x+1)^2 * (x-1)^3 * (2-x). Điểm cực đại của hàm số là:
+\\choice
+{x = -1}
+{x = 1}
+{\\True x = 2}
+{x = -1 và x = 2}
+\\loigiai{Nghiệm x = 2 làm đạo hàm đổi dấu từ dương sang âm.}
+\\end{ex}`;
+    }
+  </script>
+</body>
+</html>
